@@ -4,7 +4,7 @@ Version: 0.1.0
 Author: Nelson Roque, PhD <nur375@psu.edu>
 Description: Package to easily bind weather and lunar phase data to any dataset with GPS + date
 License: MIT
-Depends: R (>= 3.4.0), tidyverse, rnoaa, lunar
+Depends: R (>= 3.4.0), tidyverse, rnoaa, lunar, lubridate
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0.9000

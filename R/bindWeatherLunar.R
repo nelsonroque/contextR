@@ -2,7 +2,7 @@
 #' @param df class: data.frame description: must have columns labelled identically to: gps_lat, gps_long, user_id, date 
 #' @param nLunar class: integer; description: number of lunar phase factors to return
 #' @param returnAll class: boolean; T = returns list with many steps along the way to creating final dataframe; F = returns dataframe
-#' @import tidyverse rnoaa
+#' @import tidyverse rnoaa lubridate
 #' @importFrom lunar lunar.distance.mean lunar.phase
 #' @examples
 #' bind.WeatherLunar(df,nLunar=8,returnAll=F) # just give me my dataset back with contextual data
