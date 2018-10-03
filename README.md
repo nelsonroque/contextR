@@ -25,5 +25,5 @@ test.df <- data.frame(user_id = c("1000","2000","3000"),
                       RT = c(1200,1100,3000),
                       Accuracy = c(.9,.99,.5))
 
-final.df <- getEnviromentalData(test.df)
+final.df <- bind.WeatherLunar(test.df)
 View(final.df)

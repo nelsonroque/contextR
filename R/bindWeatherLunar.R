@@ -5,8 +5,8 @@
 #' @import tidyverse rnoaa
 #' @importFrom lunar lunar.distance.mean lunar.phase
 #' @examples
-#' getEnviromentalData(df,nLunar=8,returnAll=F) # just give me my dataset back with contextual data
-#' getEnviromentalData(df,nLunar=8,returnAll=T) # I want to see all the behind the scenes data and do more
+#' bind.WeatherLunar(df,nLunar=8,returnAll=F) # just give me my dataset back with contextual data
+#' bind.WeatherLunar(df,nLunar=8,returnAll=T) # I want to see all the behind the scenes data and do more
 
 #' @export
 # function to search and bind data with df given
