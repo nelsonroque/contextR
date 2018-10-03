@@ -2,6 +2,7 @@
 
 S3method(c,"2.f")
 export(bind.WeatherLunar)
+import(lubridate)
 import(rnoaa)
 import(tidyverse)
 importFrom(lunar,lunar.distance.mean)
