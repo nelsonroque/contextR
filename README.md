@@ -2,9 +2,8 @@
 Bind weather and lunar data to provide context to any dataset with an identifier column, a date column, GPS coordinates (lat/long).
 
 ## Special Thanks
-- rOpenSci, creators of rnoaa package: https://github.com/ropensci/rnoaa
-- Emmanuel Lazaridis (https://github.com/StatLaw) and Gábor Csárdi (https://github.com/gaborcsardi), creators/maintainers of lunar package
-- weathermetr
+- rOpenSci, creators of R package, rnoaa: https://github.com/ropensci/rnoaa
+- Emmanuel Lazaridis (https://github.com/StatLaw) and Gábor Csárdi (https://github.com/gaborcsardi), creators/maintainers of R package, lunar
 
 # Installation:
 ```r
