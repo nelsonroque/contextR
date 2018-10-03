@@ -10,7 +10,7 @@
 
 #' @export
 # function to search and bind data with df given
-getEnviromentalData <- function(df,nLunar=8,returnAll=F) {
+bind.WeatherLunar <- function(df,nLunar=8,returnAll=F) {
 
   # add other date format to original data
   df$date_format = gsub("-","",as.Date(df$date,"%Y/%m/%d"))
