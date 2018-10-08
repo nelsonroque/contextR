@@ -1,8 +1,0 @@
-library(roxygen2)
-library(devtools)
-setwd("~/GitHub/contextR")
-document()
-setwd("..")
-install("contextR")
-setwd("~/GitHub/contextR")
-source("tests/simple.R")
