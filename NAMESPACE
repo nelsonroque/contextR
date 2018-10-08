@@ -2,6 +2,7 @@
 
 S3method(c,"2.f")
 export(bind.WeatherLunar)
+export(weather2df)
 import(lubridate)
 import(rnoaa)
 import(tidyverse)
