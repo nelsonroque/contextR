@@ -23,10 +23,17 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
   # data pre-procesing #### 
   # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   # create structured date column
-  df.pp = df %>% mutate_at(vars(matches(date_c)), .funs = funs(DATE = as.Date(., date_f))) %>%
-    mutate_at(vars(date_c), .funs = funs(YEAR = year(DATE))) %>%
-    mutate_at(vars(date_c), .funs = funs(DATE_SEARCH = as.character(as.Date(DATE,"%Y%m%d"))))
-  
+  if(date_f == "") {
+    df.pp = df %>% 
+      #mutate_at(vars(matches(date_c)), .funs = funs(DATE = as.Date(., date_f))) %>%
+      mutate_at(vars(date_c), .funs = funs(YEAR = year(DATE))) %>%
+      mutate_at(vars(date_c), .funs = funs(DATE_SEARCH = as.character(as.Date(DATE,"%Y%m%d"))))
+  } else {
+    df.pp = df %>% mutate_at(vars(matches(date_c)), .funs = funs(DATE = as.Date(., date_f))) %>%
+      mutate_at(vars(date_c), .funs = funs(YEAR = year(DATE))) %>%
+      mutate_at(vars(date_c), .funs = funs(DATE_SEARCH = as.character(as.Date(DATE,"%Y%m%d"))))
+  }
+
   # bind data #### 
   # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   weather.df <- data.frame()
