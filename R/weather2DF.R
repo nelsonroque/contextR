@@ -47,7 +47,7 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     cur.gps.lat <- cur.record %>% select(lat) %>% as.numeric
     cur.gps.long <- cur.record %>% select(long) %>% as.numeric
     
-    print(paste0("PROCESSING: ",cur.id," | ",cur.data.s))
+    print(paste0("PROCESSING: ",cur.id," | ",cur.date.s))
     
     # start search 5km from GPS coords
     SEARCH_RADIUS <- radius
