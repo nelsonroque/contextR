@@ -106,7 +106,9 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     }
     
     # bind weather data for given record with full dataframe
-    weather.df <- bind_rows(weather.df, cur.record.final)
+    weather.df <- bind_rows(mutate_all(weather.df, as.character), mutate_all(cur.record.final, as.character))
+    #bind_rows(weather.df, cur.record.final)
+    
   } # <END> for loop
   
   return(weather.df)
