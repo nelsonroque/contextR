@@ -84,13 +84,13 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
                                             elevation, ceiling_height, ceiling_height_quality,
                                             wind_code, wind_speed, wind_speed_quality, wind_direction, wind_direction_quality,
                                             visibility_code, visibility_distance, visibility_distance_quality,
-                                            temperature, temperature_quality, temperature_dewpoint, temperature_dewpoint_quality,
+                                            temperature, temperature_quality, temperature_dewpoint, temperature_dewpoint_quality)#,
                                             #KC1_code, KC1_condition_code, KC1_extreme_temp_month, KC1_temp, KC1_temp_quality,
-                                            AU2_precipitation_code, AU2_intensity_and_proximity_code,
+                                            #AU2_precipitation_code, AU2_intensity_and_proximity_code,
                                             #GA1_cloud_type_code, GA1_cloud_type_quality_code,
                                             #GA2_cloud_type_code, GA2_cloud_type_quality_code,
-                                            AA1_precipitation_liquid, AA1_period_quantity_hrs, AA1_depth, AA1_condition_quality, AA1_quality_code,
-                                            AA2_precipitation_liquid, AA2_period_quantity_hrs, AA2_depth, AA2_condition_quality, AA2_quality_code)
+                                            #AA1_precipitation_liquid, AA1_period_quantity_hrs, AA1_depth, AA1_condition_quality, AA1_quality_code,
+                                            #AA2_precipitation_liquid, AA2_period_quantity_hrs, AA2_depth, AA2_condition_quality, AA2_quality_code)
       
       # only give data for date of record
       results.day <- results.slim %>% filter(date == cur.date.s)
