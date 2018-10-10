@@ -12,7 +12,7 @@
 #' weather2df(df,date_c="date", date_f="%Y/%m/%d", id='user_id', lat='gps_lat', long='gps_long', radius=5, clean=F)
 
 #' @export
-# function to search and bind data with df given
+# function to search and bind data with df given (will optimize to search by zip instead of record)
 weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_lat',long='gps_long',radius=5,clean=F) {
   
   # search parameters #### 
@@ -47,6 +47,8 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     cur.gps.lat <- cur.record %>% select(lat) %>% as.numeric
     cur.gps.long <- cur.record %>% select(long) %>% as.numeric
     
+    print(paste0("PROCESSING: ",cur.id," | ",cur.data.s))
+    
     # start search 5km from GPS coords
     SEARCH_RADIUS <- radius
     
@@ -67,6 +69,7 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     if(nrow(wsr) < 1) {
       results.day <- data.frame(RESULT = paste0("no results after ", SEARCH_MAX, 'searches'))
       results.summary <- data.frame(RESULT = paste0("no results after ", SEARCH_MAX, 'searches'))
+      warning(paste0("no results for current record| ",cur.id," | ",cur.date.s))
     } else {
       # get weather data for closest station at given year; using: wsr$usaf[1]
       results.df <- isd(usaf = wsr$usaf[1],
