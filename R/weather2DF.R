@@ -80,7 +80,14 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
       }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
       
       if(!exists('results.df')) {
-        results.day <- data.frame()
+        results.day <- data.frame(date=NA, time=NA,
+                                  station_name=NA,ctry=NA,state=NA,elev_m=NA, begin=NA, end=NA, distance=NA,
+                                  latitude.x=NA, longitude.x=NA, usaf_station=NA, wban_station=NA,
+                                  air_pressure=NA, air_pressure_quality=NA,
+                                  elevation=NA, ceiling_height=NA, ceiling_height_quality=NA,
+                                  wind_code=NA, wind_speed=NA, wind_speed_quality=NA, wind_direction=NA, wind_direction_quality=NA,
+                                  visibility_code=NA, visibility_distance=NA, visibility_distance_quality=NA,
+                                  temperature=NA, temperature_quality=NA, temperature_dewpoint=NA, temperature_dewpoint_quality=NA)
       } else {
         # merge results with weather station info
         results.df <- merge(results.df, wsr, by.x=c("usaf_station","wban_station"), by.y=c("usaf","wban"))
