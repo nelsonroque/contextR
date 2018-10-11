@@ -71,10 +71,17 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
       results.summary <- data.frame(RESULT = paste0("no results after ", SEARCH_MAX, 'searches'))
       warning(paste0("no results for current record| ",cur.id," | ",cur.date.s))
     } else {
-      # get weather data for closest station at given year; using: wsr$usaf[1]
-      results.df <- isd(usaf = wsr$usaf[1],
+      
+      tryCatch({
+        # get weather data for closest station at given year; using: wsr$usaf[1]
+        results.df <- isd(usaf = wsr$usaf[1],
                           wban = wsr$wban[1],
-                          year = cur.year)
+                          year = cur.year,parallel = T)
+      }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
+      
+      if(nrow(results.df) == 0) {
+        results.df <- data.frame()
+      }
       
       # merge results with weather station info
       results.df <- merge(results.df, wsr, by.x=c("usaf_station","wban_station"), by.y=c("usaf","wban"))
