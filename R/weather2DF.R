@@ -79,7 +79,7 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
                           year = cur.year,parallel = T)
       }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
       
-      if(nrow(results.df) == 0) {
+      if(!exists(results.df)) {
         results.df <- data.frame()
       }
       
