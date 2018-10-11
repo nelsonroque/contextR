@@ -81,10 +81,10 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
       
       if(!exists('results.df')) {
         results.df <- data.frame()
+      } else {
+        # merge results with weather station info
+        results.df <- merge(results.df, wsr, by.x=c("usaf_station","wban_station"), by.y=c("usaf","wban"))
       }
-      
-      # merge results with weather station info
-      results.df <- merge(results.df, wsr, by.x=c("usaf_station","wban_station"), by.y=c("usaf","wban"))
       
       # isolate set of columns of interest              
       results.slim <- results.df %>% select(date, time,
