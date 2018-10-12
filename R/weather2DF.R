@@ -7,13 +7,14 @@
 #' @param long class: string; variable name for column with GPS Longitude data
 #' @param radius class: numeric; how far out (in km) to look from GPS coords origin
 #' @param clean class: boolean; T = returns entire day of data for record, removing observations where quality is marked as inappropriate (see NOAA documentation)
+#' @param full class: boolean; T = returns all weather for given year in record
 #' @import tidyverse rnoaa lubridate
 #' @examples
 #' weather2df(df,date_c="date", date_f="%Y/%m/%d", id='user_id', lat='gps_lat', long='gps_long', radius=5, clean=F)
 
 #' @export
 # function to search and bind data with df given (will optimize to search by zip instead of record)
-weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_lat',long='gps_long',radius=5,clean=F) {
+weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_lat',long='gps_long',radius=5,clean=F,full=F) {
   
   # search parameters #### 
   # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -47,6 +48,7 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     cur.gps.lat <- cur.record %>% select(lat) %>% as.numeric
     cur.gps.long <- cur.record %>% select(long) %>% as.numeric
     
+    # print current status
     print(paste0("PROCESSING: ",cur.id," | ",cur.date.s))
     
     # start search 5km from GPS coords
@@ -72,17 +74,21 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
       warning(paste0("no results for current record| ",cur.id," | ",cur.date.s))
     } else {
       
-      rm(results.df)
+      # remove results from last run just in case not overwritten
+      if(exists('results.df')) {
+        rm(results.df)
+      }
       
+      # get weather data for closest station at given year; using: wsr$usaf[1]
       tryCatch({
-        # get weather data for closest station at given year; using: wsr$usaf[1]
         results.df <- isd(usaf = wsr$usaf[1],
                           wban = wsr$wban[1],
                           year = cur.year,parallel = T)
       }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
       
+      # create blank dataframe in case no records are present
       if(!exists('results.df')) {
-        results.day <- data.frame(date=NA, time=NA,
+        results.all <- data.frame(date=NA, time=NA,
                                   station_name=NA,ctry=NA,state=NA,elev_m=NA, begin=NA, end=NA, distance=NA,
                                   latitude.x=NA, longitude.x=NA, usaf_station=NA, wban_station=NA,
                                   air_pressure=NA, air_pressure_quality=NA,
@@ -92,10 +98,10 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
                                   temperature=NA, temperature_quality=NA, temperature_dewpoint=NA, temperature_dewpoint_quality=NA)
       } else {
         # merge results with weather station info
-        results.df <- merge(results.df, wsr, by.x=c("usaf_station","wban_station"), by.y=c("usaf","wban"))
+        results.mrg <- merge(results.df, wsr, by.x=c("usaf_station","wban_station"), by.y=c("usaf","wban"))
         
         # isolate set of columns of interest              
-        results.slim <- results.df %>% select(date, time,
+        results.all <- results.mrg %>% select(date, time,
                                               station_name,ctry,state,elev_m, begin, end, distance,
                                               latitude.x, longitude.x, usaf_station, wban_station,
                                               air_pressure, air_pressure_quality,
@@ -103,7 +109,6 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
                                               wind_code, wind_speed, wind_speed_quality, wind_direction, wind_direction_quality,
                                               visibility_code, visibility_distance, visibility_distance_quality,
                                               temperature, temperature_quality, temperature_dewpoint, temperature_dewpoint_quality)
-        
         # EVENTUAL SUPPORT FOR:
         #KC1_code, KC1_condition_code, KC1_extreme_temp_month, KC1_temp, KC1_temp_quality,
         #AU2_precipitation_code, AU2_intensity_and_proximity_code,
@@ -112,14 +117,14 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
         #AA1_precipitation_liquid, AA1_period_quantity_hrs, AA1_depth, AA1_condition_quality, AA1_quality_code,
         #AA2_precipitation_liquid, AA2_period_quantity_hrs, AA2_depth, AA2_condition_quality, AA2_quality_code)
         
-        # only give data for date of record
-        results.day <- results.slim %>% filter(date == cur.date.s)
+        # for debugging
+        print(cur.date.s)
       }
   
     } # <END> else
     
     # bind weather and current record
-    cur.record.final <- cbind(cur.record,results.day)
+    cur.record.final <- cbind(cur.record,results.all)
     
     # mark all with poor quality
     if(clean) {
@@ -132,6 +137,23 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     #bind_rows(weather.df, cur.record.final)
     
   } # <END> for loop
+  
+  # get meta-features of date
+  weather.df <- weather.df %>% 
+    mutate(MONTH_SEARCH = month(DATE_SEARCH),
+           DAY_SEARCH = day(DATE_SEARCH),
+           YEAR_SEARCH = YEAR,
+           DATE_NOAA_RECORD = as.Date(date,"%Y%m%d")) %>%
+    mutate(MONTH_NOAA_RECORD = month(DATE_NOAA_RECORD),
+           DAY_NOAA_RECORD = day(DATE_NOAA_RECORD),
+           YEAR_NOAA_RECORD = year(DATE_NOAA_RECORD)) %>%
+    select(DATE_NOAA_RECORD, MONTH_NOAA_RECORD, DAY_NOAA_RECORD, YEAR_NOAA_RECORD,
+           DATE_SEARCH, MONTH_SEARCH, DAY_SEARCH, YEAR_SEARCH, everything(), -YEAR, -DATE)
+  
+  # filter records for day (or not) depending on function argument
+  # if(!full) {
+  #   weather.df <- weather.df
+  # }
   
   return(weather.df)
 } # <END> function
