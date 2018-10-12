@@ -35,5 +35,8 @@ a <- weather2df(test.df,date_c="date", date_f="%Y/%m/%d", id='user_id', lat='gps
 # get lunar data
 b <- lunar2df(test.df,date_c="date", date_f="%Y/%m/%d", id='user_id', lat='gps_lat', long='gps_long')
 
+# get Census data
+c <- census2df(test.df,CENSUS_API=api_test,id='user_id',searchBy='county',searchTarget='PA')
+
 # bring it together
 c <- merge(a,b,by=c('user_id','DATE_SEARCH'))
