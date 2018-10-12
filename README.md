@@ -9,6 +9,12 @@ Bind weather and lunar data to provide context to any dataset with an identifier
 
 Development supported by National Institute on Aging Grant T32 AG049676 to The Pennsylvania State University. 
 
+## Roadmap
+
+- political data by zipcode
+- top N news headlines for county/state/date
+- social media sentiment for city/state/date
+
 # Installation:
 ```r
 devtools::install_github('nelsonroque/contextR')
