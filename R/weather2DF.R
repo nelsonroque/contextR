@@ -16,6 +16,10 @@
 # function to search and bind data with df given (will optimize to search by zip instead of record)
 weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_lat',long='gps_long',radius=5,clean=F,full=F) {
   
+  # PRINT REMINDER TO CLEAN
+  print("For performance reasons, the rnoaa package caches files locally. To delete, navigate to: ")
+  print(rappdirs::user_cache_dir("rnoaa/isd"))
+  
   # search parameters #### 
   # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   # weather station search parameters
