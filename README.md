@@ -5,6 +5,10 @@ Bind weather and lunar data to provide context to any dataset with an identifier
 - rOpenSci, creators of R package, rnoaa: https://github.com/ropensci/rnoaa
 - Emmanuel Lazaridis (https://github.com/StatLaw) and Gábor Csárdi (https://github.com/gaborcsardi), creators/maintainers of R package, lunar
 
+## Acknowledgements
+
+Development supported by National Institute on Aging Grant T32 AG049676 to The Pennsylvania State University. 
+
 # Installation:
 ```r
 devtools::install_github('nelsonroque/contextR')
