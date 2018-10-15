@@ -11,6 +11,7 @@ Development supported by National Institute on Aging Grant T32 AG049676 to The P
 
 ## Roadmap
 
+- read zipcode from dataset and use for search (also add zipcode left-join data to search by state)
 - political data by zipcode
 - top N news headlines for county/state/date
 - social media sentiment for city/state/date
