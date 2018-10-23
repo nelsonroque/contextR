@@ -159,7 +159,7 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     select(DATE_NOAA_RECORD, MONTH_NOAA_RECORD, DAY_NOAA_RECORD, YEAR_NOAA_RECORD,
            DATE_SEARCH, MONTH_SEARCH, DAY_SEARCH, YEAR_SEARCH, 
            everything(), -YEAR, -DATE) %>% 
-    filter(DATE_NOAA_RECORD == DATE_SEARCH) # only return values for a given date in question (not all records)
+    filter(DATE_NOAA_RECORD == DATE_SEARCH)# only return values for a given date in question (not all records)
 
    # turn characters/factor into a numeric where possible (remove special characters from all strings)
    # weather.df
