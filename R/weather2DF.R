@@ -164,7 +164,9 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
     filter(temperature_quality != "9") %>%
     group_by(id,DATE_SEARCH) %>%
     mutate(temp.d = as.numeric(gsub("[[:punct:]]", " ", temperature))) %>%
-    summarise(min.temperature = min(temp.d))
+    summarise(mean.temperature = mean(temp.d,na.rm=T),
+              min.temperature = min(temp.d,na.rm=T),
+              max.temperature = max(temp.d,na.rm=T))
   
   # filter records for day (or not) depending on function argument
   # if(!full) {
