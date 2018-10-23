@@ -111,13 +111,14 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
                                               station_name, ctry, state, elev_m, begin, end, distance,
                                               latitude.x, longitude.x, usaf_station, wban_station,
                                               air_pressure, air_pressure_quality,
-                                              elevation, ceiling_height, ceiling_height_quality,
-                                              wind_code, wind_speed, wind_speed_quality, 
+                                              wind_speed, wind_speed_quality, 
                                               wind_direction, wind_direction_quality,
-                                              visibility_code, visibility_distance, visibility_distance_quality,
-                                              temperature, temperature_quality, 
-                                              temperature_dewpoint, temperature_dewpoint_quality)
+                                              temperature, temperature_quality)
         # EVENTUAL SUPPORT FOR:
+        # wind_code, elevation, 
+        # ceiling_height, ceiling_height_quality,
+        #temperature_dewpoint, temperature_dewpoint_quality
+        #visibility_code, visibility_distance, visibility_distance_quality,
         #KC1_code, KC1_condition_code, KC1_extreme_temp_month, KC1_temp, KC1_temp_quality,
         #AU2_precipitation_code, AU2_intensity_and_proximity_code,
         #GA1_cloud_type_code, GA1_cloud_type_quality_code,
@@ -163,18 +164,18 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
    # turn characters/factor into a numeric where possible (remove special characters from all strings)
    # weather.df
 
-   # one step further, create daily summary
-  weather.df <- weather.df %>%
-    group_by_(.dots = id_col) %>%
-    filter(temperature_quality != "9") %>%
-    mutate(temp.c = as.numeric(gsub("[[:punct:]]", " ", temperature))) %>%
-    summarise(mean.temperature = mean(temp.c,na.rm=T),
-              min.temperature = min(temp.c,na.rm=T),
-              max.temperature = max(temp.c,na.rm=T))
   # 
   # filter records for day (or not) depending on function argument
   # if(!full) {
   #   weather.df <- weather.df
+  # one step further, create daily summary
+  # weather.df <- weather.df %>%
+  #   group_by_(.dots = id_col) %>%
+  #   filter(temperature_quality != "9") %>%
+  #   mutate(temp.c = as.numeric(gsub("[[:punct:]]", " ", temperature))) %>%
+  #   summarise(mean.temperature = mean(temp.c,na.rm=T),
+  #             min.temperature = min(temp.c,na.rm=T),
+  #             max.temperature = max(temp.c,na.rm=T))
   # }
   
   return(weather.df)
