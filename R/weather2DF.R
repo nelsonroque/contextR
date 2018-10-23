@@ -163,7 +163,7 @@ weather2df <- function(df,id='user_id',date_c='date',date_f='%Y/%m/%d',lat='gps_
 
    # one step further, create daily summary
   weather.df <- weather.df %>%
-    group_by(id_col,DATE_SEARCH) %>%
+    group_by_(.dots = id_col,DATE_SEARCH) %>%
     filter(temperature_quality != "9") %>%
     mutate(temp.d = gsub("[[:punct:]]", " ", temperature)) %>%
     summarise(mean.temperature = mean(temp.d,na.rm=T),
