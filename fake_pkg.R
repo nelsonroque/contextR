@@ -43,16 +43,23 @@ context.df <- og.df %>%
 
 # ///////////////////////////////////////////////////////////////////////////////
 
-# random utility functions
-GPS_pair_distance(40.7788,-77.84137,39.7788,-77.84137)
-
-# ///////////////////////////////////////////////////////////////////////////////
-
-# UP TO THIS POINT, ALL CONTEXT IS FREE
+# UP TO THIS POINT, ALL CONTEXT IS FREE and UNRESTRICTED
 
 # ///////////////////////////////////////////////////////////////////////////////
 
 # GOING FORWARD, see:
+# -----------------------------------------------------------
+
+# -= SEE PHOTON API RESTRICTIONS: http://photon.komoot.de/
+
+# maybe just do this in the package ... 
+# http://photon.komoot.de/reverse?lon=-77.84137&lat=39.7788"
+
+context.plus.df <- context.df %>%
+  mutate(revgeo_result = purrr::pmap(list(photon_api_call), get_reverse_geo_features)) %>%
+  unnest(revgeo_result)
+
+# ///////////////////////////////////////////////////////////////////////////////
 
 # -= DARKSKY API PRICING: https://darksky.net/dev
 
@@ -63,17 +70,7 @@ weather.list <- get_weather_context(context.df$api_call)
 og.plus.weather.daily <- weather.list$daily %>%
     inner_join(context.df)
 
-# -= SEE PHOTON API PRICING: http://photon.komoot.de/
-
-# maybe just do this in the package ... 
-# http://photon.komoot.de/reverse?lon=-77.84137&lat=39.7788"
-
-hmm <- revgeo(context.df$lng, context.df$lat, 
-              provider =  'photon', 
-              output = 'frame') %>% 
-  mutate(index = row_number(),
-         country = as.character(country)) %>% 
-  mutate(location = paste(city, state, sep = ", "))
+# ///////////////////////////////////////////////////////////////////////////////
 
 # -= CENSUS API RESTRICTIONS: https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 
@@ -85,3 +82,11 @@ hmm <- revgeo(context.df$lng, context.df$lat,
 # lng
 # dob
 # og_date
+
+# ///////////////////////////////////////////////////////////////////////////////
+
+# random utility functions
+
+# ///////////////////////////////////////////////////////////////////////////////
+
+GPS_pair_distance(40.7788,-77.84137,39.7788,-77.84137)
