@@ -6,6 +6,7 @@ library(digest) # for hashing API to create unique key for merging
 library(jsonlite) # for interpreting JSON
 library(geosphere) # for GPS coord distance calcs
 library(weathermetrics) # for temp conversion if necessary
+library(zipcode)
 
 # ///////////////////////////////////////////////////////////////////////////////
 
@@ -81,4 +82,8 @@ og.plus.weather.daily <- weather.list$daily %>%
 
 # ///////////////////////////////////////////////////////////////////////////////
 
+# distance between two GPS coords (havershin distance -- butchered the name)
 u_gps_pair_distance(40.7788,-77.84137,39.7788,-77.84137)
+
+# zipcode to GPS coords + city/state
+u_zipcode_to_geo(33133)
