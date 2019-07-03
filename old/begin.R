@@ -18,6 +18,10 @@ create_api_call <- function(DARK_SKY_API_KEY, lat, lng, ts) {
   return(api_call)
 }
 
+hash_api_call <- function(api_call, hash="md5") {
+  return(digest::digest(api_call, algo=hash))
+}
+
 # ///////////////////////////////////////////////////////////////////////////////
 
 # FUNCTION: make string of latitude and longitude
@@ -177,9 +181,9 @@ lunar.df <- get_lunar_context_from_date(geo.df$og_date)
 # ///////////////////////////////////////////////////////////////////////////////
 
 # get daily context data
-geo.all <- get_weather_context(geo.df$api_call)
+#geo.all <- get_weather_context(geo.df$api_call)
 
 # ///////////////////////////////////////////////////////////////////////////////
 
-final.df <-  geo.df %>%
-  inner_join(geo.all$daily)
+#final.df <-  geo.df %>%
+#  inner_join(geo.all$daily)
