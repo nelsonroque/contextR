@@ -1,1 +1,0 @@
-weathermetrics::celsius.to.fahrenheit()
