@@ -1,5 +1,5 @@
 Package: contextR
-Title: Bind Weather & Lunar Data to Any Dataset
+Title: Bind Weather data, Lunar data, Reverse Geocoded data to any dataset with sufficient properties.
 Version: 0.1.0
 Author: Nelson Roque, PhD <nur375@psu.edu>
 Description: Package to easily bind weather and lunar phase data to any dataset with GPS + date
