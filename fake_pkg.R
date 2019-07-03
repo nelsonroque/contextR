@@ -5,6 +5,7 @@ library(lunar) # all lunar data outside of darksky
 library(digest) # for hashing API to create unique key for merging
 library(jsonlite) # for interpreting JSON
 library(geosphere) # for GPS coord distance calcs
+library(revgeo)
 
 # ///////////////////////////////////////////////////////////////////////////////
 
@@ -31,6 +32,8 @@ context.df <- og.df %>%
          current_season = get_season_from_date_v(og_date),
          api_call = create_darksky_api_call_v(DARK_SKY_API_KEY, lat, lng, ts)) %>%
   mutate(api_call_id = hash_api_call_v(api_call, algo="md5")) %>%
+  mutate(photon_api_call = create_photon_api_call_v(lat, lng)) %>%
+  mutate(photon_api_call_id = hash_api_call_v(photon_api_call, algo="md5")) %>%
   mutate(lunar_result = purrr::pmap(list(dob), get_lunar_context_from_date)) %>%
   unnest(lunar_result)
 
@@ -59,6 +62,18 @@ weather.list <- get_weather_context(context.df$api_call)
 # stitch daily data with it!
 og.plus.weather.daily <- weather.list$daily %>%
     inner_join(context.df)
+
+# -= SEE PHOTON API PRICING: http://photon.komoot.de/
+
+# maybe just do this in the package ... 
+# http://photon.komoot.de/reverse?lon=-77.84137&lat=39.7788"
+
+hmm <- revgeo(context.df$lng, context.df$lat, 
+              provider =  'photon', 
+              output = 'frame') %>% 
+  mutate(index = row_number(),
+         country = as.character(country)) %>% 
+  mutate(location = paste(city, state, sep = ", "))
 
 # -= CENSUS API RESTRICTIONS: https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html
 
