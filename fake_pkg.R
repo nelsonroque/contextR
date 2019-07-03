@@ -11,6 +11,7 @@ library(revgeo)
 
 # set API key
 DARK_SKY_API_KEY = "001ef0b8cd273a1551d5abe38a4b26a2"
+CENSUS_API_KEY = ''
 
 # ///////////////////////////////////////////////////////////////////////////////
 
