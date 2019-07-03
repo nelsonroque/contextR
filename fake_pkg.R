@@ -34,17 +34,19 @@ geo.df <- data.frame(neg_affect = c(90,80),
 # -= DARKSKY API PRICING: https://darksky.net/dev
 weather.list <- get_weather_context(geo.df$api_call)
 
-weather.daily <- weather.list$daily %>%
-  sanitize_cols(.)
+weather.daily <- weather.list$daily %>% rename_all(
+  funs(
+    stringr::str_to_lower(.) %>%
+      stringr::str_replace_all(., '\\.', '_')
+  ))
+
+og.plus.weather.daily <- weather.daily %>%
+    inner_join(geo.df)
+
   
   
 sanitize_cols <- function(df) {
-  rdf <- df %>% rename_all(
-    funs(
-      stringr::str_to_lower(.) %>%
-        stringr::str_replace_all(., '\\.', '_')
-    )
-  )
+  rdf <- df 
   return(rdf)
 }
 

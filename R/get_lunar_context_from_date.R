@@ -13,8 +13,7 @@ get_lunar_context_from_date <- function(date, ...){
   lunar_illumination <- lunar::lunar.illumination(date)
   
   # return as a tibble for niceties
-  return(tibble::tibble(date,
-                        lunar_phase_radians,
+  return(tibble::tibble(lunar_phase_radians,
                         lunar_phase_4cat,
                         lunar_phase_8cat,
                         lunar_distance_cat,
