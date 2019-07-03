@@ -5,7 +5,7 @@ library(lunar) # all lunar data outside of darksky
 library(digest) # for hashing API to create unique key for merging
 library(jsonlite) # for interpreting JSON
 library(geosphere) # for GPS coord distance calcs
-library(revgeo)
+library(weathermetrics) # for temp conversion if necessary
 
 # ///////////////////////////////////////////////////////////////////////////////
 
