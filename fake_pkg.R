@@ -4,6 +4,7 @@ library(DescTools) # zodiac dependency
 library(lunar) # all lunar data outside of darksky
 library(digest) # for hashing API to create unique key for merging
 library(jsonlite) # for interpreting JSON
+library(geosphere) # for GPS coord distance calcs
 
 # ///////////////////////////////////////////////////////////////////////////////
 
@@ -36,6 +37,11 @@ context.df <- og.df %>%
 # need multiple API calls? 
 # no problem, just add a separate mutate call
 # (dont forget the additional api_call_id)
+
+# ///////////////////////////////////////////////////////////////////////////////
+
+# random utility functions
+GPS_pair_distance(40.7788,-77.84137,39.7788,-77.84137)
 
 # ///////////////////////////////////////////////////////////////////////////////
 
