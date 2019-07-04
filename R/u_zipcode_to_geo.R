@@ -1,14 +1,14 @@
 u_zipcode_to_geo <- function(zip, ...) {
+  # clean zipcodes
+  #czip <- clean.zipcodes(zip)
+  zip <- as.character(zip)
+  
+  # load package data
   data(zipcode)
+
+  # merge data
+  og <- tibble(zip) 
+  result <- og %>% inner_join(zipcode)
   
-  # unsafe (think how to pad 0s)
-  if(is.numeric(zip)){
-    zip <- as.character(zip)
-  }
-  
-  print(zip)
-  
-  result <- tibble(zip) %>% inner_join(zipcode)
-  
-  return(tibble::tibble(result))
+  return(result)
 }

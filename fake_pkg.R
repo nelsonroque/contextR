@@ -10,6 +10,15 @@ library(zipcode)
 
 # ///////////////////////////////////////////////////////////////////////////////
 
+# DATA PRIVACY MANIFESTO
+
+# -- all records originate from consenting users
+# -- minimize api calls
+# -- respect API
+# -- be fuzzy with GPS where possible
+
+# ///////////////////////////////////////////////////////////////////////////////
+
 # set API key
 DARK_SKY_API_KEY = "001ef0b8cd273a1551d5abe38a4b26a2"
 CENSUS_API_KEY = ''
@@ -21,7 +30,8 @@ og.df <- data.frame(survey_result = c(90,80), # example of 'real data'
                      dob = c("1991-05-16","1991-04-04"), # optional
                      lat = c(40.7788,39.7788), # necessary for getting weather (see conversions)
                      lng = c(-77.84137,-77.84137), # necessary for getting weather (see conversions)
-                     ts = c(1273687200,1273687200)) %>% # necessary for getting weather (see conversions)
+                     ts = c(1273687200,1273687200),
+                    postal = c(33144,32837)) %>% # necessary for getting weather (see conversions)
   mutate(og_date = lubridate::as_datetime(ts)) # make sure to have ts in as.Date format for other calls
 
 # ///////////////////////////////////////////////////////////////////////////////
@@ -37,7 +47,9 @@ context.df <- og.df %>%
   mutate(photon_api_call = create_photon_api_call_v(lat, lng)) %>%
   mutate(photon_api_call_id = hash_api_call_v(photon_api_call, algo="md5")) %>%
   mutate(lunar_result = purrr::pmap(list(dob), get_lunar_context_from_date)) %>%
-  unnest(lunar_result)
+  unnest(lunar_result) %>%
+  mutate(geo_result = purrr::pmap(list(postal), u_zipcode_to_geo)) %>%
+  unnest(geo_result)
 
 # need multiple API calls? 
 # no problem, just add a separate mutate call
