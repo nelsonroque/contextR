@@ -6,7 +6,7 @@ library(digest) # for hashing API to create unique key for merging
 library(jsonlite) # for interpreting JSON
 library(geosphere) # for GPS coord distance calcs
 library(weathermetrics) # for temp conversion if necessary
-library(zipcode)
+library(zipcode) # for zipcode DB
 
 # ///////////////////////////////////////////////////////////////////////////////
 
@@ -42,10 +42,12 @@ context.df <- og.df %>%
          zodiac = get_zodiac_sign_from_dob(dob),
          birth_season = get_season_from_date_v(dob),
          current_season = get_season_from_date_v(og_date),
-         api_call = create_darksky_api_call_v(DARK_SKY_API_KEY, lat, lng, ts)) %>%
-  mutate(api_call_id = hash_api_call_v(api_call, algo="md5")) %>%
+         darksky_api_call = create_darksky_api_call_v(DARK_SKY_API_KEY, lat, lng, ts)) %>%
+  mutate(darksky_api_call_id = hash_api_call_v(darksky_api_call, algo="md5")) %>%
   mutate(photon_api_call = create_photon_api_call_v(lat, lng)) %>%
   mutate(photon_api_call_id = hash_api_call_v(photon_api_call, algo="md5")) %>%
+  mutate(fcc_api_call = create_fcc_api_call_v(lat, lng)) %>%
+  mutate(fcc_api_call_id = hash_api_call_v(fcc_api_call, algo="md5")) %>%
   mutate(lunar_result = purrr::pmap(list(dob), get_lunar_context_from_date)) %>%
   unnest(lunar_result) %>%
   mutate(geo_result = purrr::pmap(list(postal), u_zipcode_to_geo)) %>%
@@ -64,12 +66,21 @@ context.df <- og.df %>%
 # GOING FORWARD, see:
 # -----------------------------------------------------------
 
+# ///////////////////////////////////////////////////////////////////////////////
+
+# -= SEE FCC API RESTRICTIONS: https://geo.fcc.gov/api/census/#!/area/get_area
+
+# get FCC census lookup features
+context.fcc.df <- context.df %>%
+  mutate(census_result = purrr::pmap(list(fcc_api_call), get_fcc_census_metadata)) %>%
+  unnest(census_result)
+
+# ///////////////////////////////////////////////////////////////////////////////
+
 # -= SEE PHOTON API RESTRICTIONS: http://photon.komoot.de/
 
-# maybe just do this in the package ... 
-# http://photon.komoot.de/reverse?lon=-77.84137&lat=39.7788"
-
-context.plus.df <- context.df %>%
+# get photon reverse geocode features
+context.plus.df <- context.fcc.df %>%
   mutate(revgeo_result = purrr::pmap(list(photon_api_call), get_reverse_geo_features)) %>%
   unnest(revgeo_result)
 
@@ -78,7 +89,7 @@ context.plus.df <- context.df %>%
 # -= DARKSKY API PRICING: https://darksky.net/dev
 
 # get all weather data for each api call (returns list)
-weather.list <- get_weather_context(context.df$api_call)
+weather.list <- get_weather_context(context.df$darksky_api_call)
 
 # stitch daily data with it!
 og.plus.weather.daily <- weather.list$daily %>%
