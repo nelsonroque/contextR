@@ -105,8 +105,13 @@ og.plus.weather.daily <- weather.list$daily %>%
 
 # ///////////////////////////////////////////////////////////////////////////////
 
+# set home point
+home_point <- c(40.7788,-77.84137)
+
 # distance between two GPS coords (havershin distance -- butchered the name)
-u_gps_pair_distance(40.7788,-77.84137,39.7788,-77.84137)
+u_gps_pair_distance(40.7788,-77.84137,39.7788,-77.84137, return_type = "km")
+
+u_gps_distance_origin(home_point, 39.7788,-77.84137, return_type = "km")
 
 # zipcode to GPS coords + city/state
 u_zipcode_to_geo(33133)
