@@ -3,6 +3,7 @@
 #' @name get_weather_context
 #' @param api_call class: string
 #' @param hash class: string
+#' @import tidyverse
 #' @examples
 #' get_weather_context(api_call, hash="md5")
 #' @export
@@ -23,32 +24,32 @@ get_weather_context <- function(api_call, hash="md5"){
     
     # daily
     daily.df <- tibble::as_tibble(raw.json$daily$data) %>%
-      mutate(api_call = api_call[i]) %>%
-      mutate(api_call_id = digest::digest(api_call, algo=hash)) # save MD5 of call
+      mutate(darksky_api_call = api_call[i]) %>%
+      mutate(darksky_api_call_id = digest::digest(darksky_api_call, algo=hash)) # save MD5 of call
     daily.results <- bind_rows(daily.results, daily.df)
     
     # hourly
     hourly.df <- tibble::as_tibble(raw.json$hourly$data) %>%
-      mutate(api_call = api_call[i]) %>%
-      mutate(api_call_id = digest::digest(api_call, algo=hash)) # save MD5 of call
+      mutate(darksky_api_call = api_call[i]) %>%
+      mutate(darksky_api_call_id = digest::digest(darksky_api_call, algo=hash)) # save MD5 of call
     hourly.results <- bind_rows(hourly.results, hourly.df)
     
     # minutely
     minutely.df <- tibble::as_tibble(raw.json$minutely$data) %>%
-      mutate(api_call = api_call[i]) %>%
-      mutate(api_call_id = digest::digest(api_call, algo=hash)) # save MD5 of call
+      mutate(darksky_api_call = api_call[i]) %>%
+      mutate(darksky_api_call_id = digest::digest(darksky_api_call, algo=hash)) # save MD5 of call
     minutely.results <- bind_rows(minutely.results, minutely.df)
     
     # current
     currently.df <- tibble::as_tibble(raw.json$currently$data) %>%
-      mutate(api_call = api_call[i]) %>%
-      mutate(api_call_id = digest::digest(api_call, algo=hash)) # save MD5 of call
+      mutate(darksky_api_call = api_call[i]) %>%
+      mutate(darksky_api_call_id = digest::digest(darksky_api_call, algo=hash)) # save MD5 of call
     currently.results <- bind_rows(currently.results, currently.df)
     
     # alerts
     alerts.df <- tibble::as_tibble(raw.json$alerts$data) %>%
-      mutate(api_call = api_call[i]) %>%
-      mutate(api_call_id = digest::digest(api_call, algo=hash)) # save MD5 of call
+      mutate(darksky_api_call = api_call[i]) %>%
+      mutate(darksky_api_call_id = digest::digest(darksky_api_call, algo=hash)) # save MD5 of call
     alerts.results <- bind_rows(alerts.results, alerts.df)
     
   }
