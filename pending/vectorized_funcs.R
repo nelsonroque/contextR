@@ -1,6 +1,0 @@
-create_fcc_api_call_v <- Vectorize(create_fcc_api_call)
-create_darksky_api_call_v <- Vectorize(create_darksky_api_call)
-create_photon_api_call_v <- Vectorize(create_photon_api_call)
-get_lunar_context_from_date_v <- Vectorize(get_lunar_context_from_date)
-get_season_from_date_v <- Vectorize(get_season_from_date)
-hash_api_call_v <- Vectorize(hash_api_call)
