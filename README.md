@@ -1,12 +1,19 @@
 # R package: contextR
 Bind weather and lunar data to provide context to any dataset with an identifier column, a date column, GPS coordinates (lat/long).
 
+---
+
+## Getting API Keys
+  - Darksky: https://darksky.net/dev
+
 ##  DATA PRIVACY MANIFESTO
 
   - all records originate from consenting users
   - minimize api calls
   - respect API
   - be fuzzy with GPS where possible (use zipcode centroid)
+  
+---
 
 ## Special Thanks
 - Emmanuel Lazaridis (https://github.com/StatLaw) and Gábor Csárdi (https://github.com/gaborcsardi), creators/maintainers of R package, lunar
@@ -14,6 +21,8 @@ Bind weather and lunar data to provide context to any dataset with an identifier
 ## Acknowledgements
 
 Development supported by National Institute on Aging Grant T32 AG049676 to The Pennsylvania State University. 
+
+---
 
 ## Roadmap
 
