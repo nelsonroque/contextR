@@ -1,5 +1,17 @@
+#' contextR
+
+#' @name u_gps_pair_distance
+#' @param lat1 class: numeric
+#' @param lng1 class: numeric
+#' @param lat2 class: numeric
+#' @param lng2 class: numeric
+#' @param return_type class: string
+#' @import geosphere
+#' @examples
+#' u_gps_pair_distance(lat1, lng1, lat2, lng2, return_type = "meters")
+#' @export
 u_gps_pair_distance <- function(lat1, lon1, lat2, lon2, return_type = "meters") {
-  result <- as.numeric(geosphere::distm(c(lon1, lat1), c(lon2, lat2)))
+  result <- as.numeric(geosphere::distm(c(lng1, lat1), c(lng2, lat2)))
   
   if(return_type == "km"){
     result <- result/1000

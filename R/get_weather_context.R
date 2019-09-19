@@ -1,4 +1,11 @@
-# FUNCTION: get data from api (operates off a table of API calls)
+#' contextR
+
+#' @name get_weather_context
+#' @param api_call class: string
+#' @param hash class: string
+#' @examples
+#' get_weather_context(api_call, hash="md5")
+#' @export
 get_weather_context <- function(api_call, hash="md5"){
   
   # POWERED BY DARKSKY: (https://darksky.net/poweredby)

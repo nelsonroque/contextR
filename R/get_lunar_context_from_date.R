@@ -1,3 +1,11 @@
+#' contextR
+
+#' @name get_lunar_context_from_date
+#' @param date class: POSIXct
+#' @import lunar
+#' @examples
+#' get_lunar_context_from_date(date)
+#' @export
 get_lunar_context_from_date <- function(date, ...){
   # if date provided is not a valid date, make it one [TODO: expose `format`]
   if(class(date) != "Date"){
@@ -20,5 +28,3 @@ get_lunar_context_from_date <- function(date, ...){
                         lunar_distance_num,
                         lunar_illumination))
 }
-
-get_lunar_context_from_date_v <- Vectorize(get_lunar_context_from_date)
