@@ -4,6 +4,7 @@
 #' @param api_call class: string
 #' @param hash class: string
 #' @import tidyverse
+#' @import jsonlite
 #' @examples
 #' get_weather_context(api_call, hash="md5")
 #' @export

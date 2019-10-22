@@ -13,7 +13,7 @@ u_zipcode_to_geo <- function(zip, ...) {
   zip <- as.character(zip)
   
   # load package data
-  zipcode::data(zipcode)
+  data(zipcode)
 
   # merge data
   og <- tibble::tibble(zip) 
