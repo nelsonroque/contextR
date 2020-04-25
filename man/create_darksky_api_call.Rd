@@ -18,10 +18,6 @@ create_lat_lng_str(lat, lng, delimiter = ",")
 \item{lng}{class: numeric}
 
 \item{delimiter}{class: string}
-
-\item{lat}{class: numeric}
-
-\item{lng}{class: numeric}
 }
 \description{
 contextR

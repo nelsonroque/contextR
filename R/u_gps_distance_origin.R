@@ -1,6 +1,6 @@
 #' contextR
-
 #' @name u_gps_distance_origin
+#' @export
 #' @param homepoint class: vector(lat, lng)
 #' @param lat2 class: numeric
 #' @param lng2 class: numeric
@@ -8,7 +8,6 @@
 #' @import geosphere
 #' @examples
 #' u_gps_distance_origin(homepoint, lat2, lon2, return_type = "meters")
-#' @export
 u_gps_distance_origin <- function(homepoint, lat2, lng2, return_type = "meters") {
   result <- as.numeric(geosphere::distm(c(homepoint[2], homepoint[1]), c(lng2, lat2)))
   

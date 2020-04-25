@@ -1,6 +1,6 @@
 #' contextR
-
 #' @name get_season_from_date
+#' @export
 #' @param date class: POSIXct
 #' @param hemi class: string
 #' @param use_pkg class: boolean
@@ -8,7 +8,6 @@
 #' @import lunar
 #' @examples
 #' get_season_from_date(date, hemi="northern", use_pkg = T)
-#' @export
 get_season_from_date <- function(date, hemi="northern", use_pkg = T){
   if(use_pkg){
     season <- tolower(lunar::terrestrial.season(as.Date(date)))

@@ -1,11 +1,10 @@
 #' contextR
-
 #' @name get_lunar_context_from_date
+#' @export
 #' @param date class: POSIXct
 #' @import lunar
 #' @examples
 #' get_lunar_context_from_date(date)
-#' @export
 get_lunar_context_from_date <- function(date, ...){
   # if date provided is not a valid date, make it one [TODO: expose `format`]
   if(class(date) != "Date"){

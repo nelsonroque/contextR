@@ -1,13 +1,12 @@
 #' contextR
-
 #' @name get_weather_context
+#' @expor
 #' @param api_call class: string
 #' @param hash class: string
 #' @import tidyverse
 #' @import jsonlite
 #' @examples
 #' get_weather_context(api_call, hash="md5")
-#' @export
 get_weather_context <- function(api_call, hash="md5"){
   
   # POWERED BY DARKSKY: (https://darksky.net/poweredby)
