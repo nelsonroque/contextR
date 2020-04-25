@@ -2,7 +2,6 @@
 
 #' @name u_zipcode_to_geo
 #' @param zip class: numeric
-#' @import zipcode
 #' @import tidyverse
 #' @examples
 #' u_zipcode_to_geo(zip)
