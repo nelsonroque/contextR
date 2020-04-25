@@ -1,6 +1,6 @@
 #' contextR
 #' @name get_weather_context
-#' @expor
+#' @export
 #' @param api_call class: string
 #' @param hash class: string
 #' @import tidyverse
